@@ -1,0 +1,56 @@
+import { useContext, useState } from 'react';
+import PropTypes from 'prop-types'
+import InputField from '../InputField/InputField';
+import axios from 'axios';
+import { backendUrl, config } from '../../constants';
+import { toast } from 'react-toastify';
+import { UserContext } from '../../context/UserContextProvider';
+
+const Details = ({ user, setIndex }) => {
+    const { setUpdate } = useContext(UserContext)
+    const [formData, setFormData] = useState({
+        username: user.username,
+        mac: user.mac,
+        "last-paid": user['last-paid']
+    })
+
+    const handleSubmit = e => {
+        e.preventDefault();
+
+        formData["last-paid"] = e.target['last-paid'].value.length > 0 ? e.target['last-paid'].value : "0-0-0000"
+
+        axios.put(backendUrl + 'users/' + user._id, formData, config).then(({ data }) => {
+            if (data.modifiedCount) {
+                setIndex(-1);
+                toast.success(`${user.username}'s data updated successfully`);
+                setUpdate(`${user.username}'s data updated successfully`);
+            }
+        })
+    }
+
+
+    return (
+        <div className='fixed top-0 left-0 w-screen h-screen backdrop-blur flex items-center justify-center'>
+            <form className="relative xl:w-1/2 xl:h-1/2 shadow-[0_0_20px_#1c1c1c]" onSubmit={handleSubmit}>
+                <button type='button' className='absolute right-0 -top-10 text-2xl' onClick={() => setIndex(-1)}>&times;</button>
+                {/* <input type="text" value={user.username} onChange={e => setFormData({ ...formData, username: e.target.value })} /> */}
+                <div className='w-full h-full rounded-md p-4 flex flex-col gap-5 overflow-auto bg-[#333]'>
+                    <h1 className='text-center text-5xl gradient-text font-semibold'>Edit User</h1>
+                    <InputField required={true} id='username' label='User Name' placeholder='User Name' name='username' type="text" value={formData.username} onChange={e => setFormData({ ...formData, username: e.target.value })} />
+                    <InputField required={true} id='mac' label='Mac Address' placeholder='Mac Address' name='mac' type="text" value={formData.mac} onChange={e => setFormData({ ...formData, mac: e.target.value })} />
+                    <InputField id='last-paid' label='Last Paid' placeholder='Last Paid' name='last-paid' type="date" value={formData['last-paid']} onChange={e => setFormData({ ...formData, "last-paid": e.target.value })} />
+                    <div className="text-center mt-10">
+                        <input type="submit" value="Edit" className='px-10 py-2 bg-blue-800 text-white cursor-pointer hover:bg-blue-900 rounded' />
+                    </div>
+                </div>
+            </form>
+        </div>
+    );
+};
+
+Details.propTypes = {
+    user: PropTypes.object.isRequired,
+    setIndex: PropTypes.func.isRequired
+}
+
+export default Details;
