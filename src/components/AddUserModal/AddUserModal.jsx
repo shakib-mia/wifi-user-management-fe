@@ -23,7 +23,7 @@ const AddUserModal = ({ showAddUserModal }) => {
 
 
         axios.post(backendUrl + 'users/', formData, config).then(res => {
-            if (res.data.acknowledged) {
+            if (res.data.insertedId.length) {
                 setUpdate(`${e.target.username.value} added successfully`);
                 showAddUserModal(false);
                 toast.success(`${e.target.username.value} added successfully`);

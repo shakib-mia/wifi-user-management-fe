@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types'
-import { backendUrl, config } from '../constants';
+import { backendUrl } from '../constants';
 import axios from 'axios';
 
 export const UserContext = createContext();
@@ -13,6 +13,12 @@ export function UserContextProvider({ children }) {
 
 
     useEffect(() => {
+        const config = {
+            headers: {
+                token,
+            },
+        };
+
         if (token) {
             axios.get(`${backendUrl}users`, config).then(({ data }) => {
                 setUsers(data);

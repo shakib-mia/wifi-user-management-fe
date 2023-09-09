@@ -14,8 +14,7 @@ const ListItem = ({ item, setIndex, itemKey }) => {
         // console.log(reply);
         if (reply) {
             axios.delete(backendUrl + 'users/' + item._id).then(res => {
-                // console.log(res);
-                if (res.data.acknowledged) {
+                if (res.data.deletedCount) {
                     setUpdate(!update)
                     toast.success("User Removed successfully")
                 }

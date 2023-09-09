@@ -1,4 +1,4 @@
-export const backendUrl = "http://192.168.0.108:5000/";
+export const backendUrl = "https://wifi-user-management-be.onrender.com/";
 
 export const config = {
   headers: {
