@@ -28,10 +28,10 @@ const ListItem = ({ item, setIndex, itemKey }) => {
             <div className="w-4/12">{item.mac}</div>
             <div className="w-3/12">{item["last-paid"]}</div>
             <div className="w-1/12">
-                <button className='text-base text-[#4169e1]' onClick={() => setIndex(itemKey)}>Edit</button>
+                <button className='text-base text-[#4169e1] font-medium' onClick={() => setIndex(itemKey)}>Edit</button>
             </div>
             <div className="w-1/12">
-                <button className='text-base text-[#f09c00c4]' onClick={handleDelete}>Delete</button>
+                <button className='text-base text-[#ff1a1a] font-medium' onClick={handleDelete}>Delete</button>
             </div>
         </div>
     );

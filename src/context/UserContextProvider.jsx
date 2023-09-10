@@ -10,6 +10,7 @@ export function UserContextProvider({ children }) {
     const [users, setUsers] = useState([]);
     const [token, setToken] = useState(localStorage.getItem("token"));
     const [loading, setLoading] = useState(true);
+    const [admin, setAdmin] = useState({})
 
 
     useEffect(() => {
@@ -25,14 +26,30 @@ export function UserContextProvider({ children }) {
                 setLoading(false)
             })
         }
-    }, [update, token])
+    }, [update, token]);
+
+    useEffect(() => {
+        const config = {
+            headers: {
+                token,
+            },
+        };
+
+        if (token) {
+            axios.get(`${backendUrl}admin`, config).then(({ data }) => {
+                setAdmin(data);
+                setLoading(false)
+            })
+        }
+    }, [update, token]);
 
     const contextValue = {
         users,
         setUsers,
         setUpdate,
         setToken,
-        loading
+        loading,
+        admin
     };
 
     return (

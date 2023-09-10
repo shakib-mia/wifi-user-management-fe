@@ -30,6 +30,7 @@ const Login = () => {
             if (res.data.error) {
                 setProcessing(false)
                 toast.error(res.data.error)
+                console.log(res);
             }
         })
     }

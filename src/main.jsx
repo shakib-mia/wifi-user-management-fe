@@ -40,7 +40,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <UserContextProvider>
       <RouterProvider router={router} />
 
-      <ToastContainer />
+      <ToastContainer className="capitalize" />
     </UserContextProvider>
   </React.StrictMode>
 )

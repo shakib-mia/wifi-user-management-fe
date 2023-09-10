@@ -6,8 +6,7 @@ import AddUserModal from "../../components/AddUserModal/AddUserModal";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-    const { users, setToken, loading } = useContext(UserContext)
-    // console.log(users);
+    const { users, setToken, loading, admin } = useContext(UserContext)
     const navigate = useNavigate()
     const [index, setIndex] = useState(-1);
     const [addUserModal, showAddUserModal] = useState(false)
@@ -22,8 +21,9 @@ const Home = () => {
     return <div className="xl:h-screen xl:w-screen xl:flex xl:flex-col xl:items-center xl:justify-center">
         <div className="xl:w-1/2 xl:h-1/2 shadow-[0_0_20px_#1c1c1c] rounded-md p-4 overflow-auto relative">
             <div className="w-[600px] xl:w-full relative">
-                <p className="text-right fixed right-3 top-4">Total users: {users.length} <button className="text-white bg-red-700 px-4 py-2 rounded ml-4" onClick={handleLogout}>Log out</button></p>
+                <p className="text-right fixed right-3 top-4">{admin.name?.length ? admin.name : admin.email?.split("@")[0]} <button className="text-white bg-red-700 px-4 py-2 rounded ml-4" onClick={handleLogout}>Log out</button></p>
                 <h1 className="text-center text-5xl gradient-text font-semibold">All Users</h1>
+                <h6 className="text-center text-lg text-slate-400 mb-4 font-medium">Total Users: {users.length}</h6>
                 {users.length > 0 && <div className="flex gap-5 p-3 shadow-md my-3 text-center capitalize items-center text-xl font-light" id="userslist">
                     <div className="w-3/12">username</div>
                     <div className="w-4/12">MAC Address</div>

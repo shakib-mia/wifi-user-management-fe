@@ -7,7 +7,7 @@ const InputField = ({ id, label, placeholder, type, name, required, value, onCha
     const [show, setShow] = useState(false);
     return (
         <div className={containerClassName}>
-            <label className='ml-2' htmlFor={id}>{label}</label>
+            <label className='ml-2 capitalize' htmlFor={id}>{label}</label>
             <div className='relative'>
                 {type !== 'password'
                     ?
