@@ -21,7 +21,7 @@ const Register = () => {
                 password: e.target.password.value
             }
 
-            axios.post(`${backendUrl}public/signup`, formData).then(res => {
+            axios.post(`${backendUrl}signup`, formData).then(res => {
                 if (res.data.insertedCount) {
                     setProcessing(false)
                     navigate("/login")
