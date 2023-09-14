@@ -25,7 +25,7 @@ const Details = ({ user, setIndex }) => {
                 toast.success(`${user.username}'s data updated successfully`);
                 setUpdate(`${user.username}'s data updated successfully`);
             }
-        })
+        }).catch(err => console.log(err))
     }
 
 

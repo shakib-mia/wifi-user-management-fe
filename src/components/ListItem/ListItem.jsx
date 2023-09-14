@@ -7,13 +7,19 @@ import { UserContext } from '../../context/UserContextProvider';
 import { toast } from 'react-toastify';
 
 const ListItem = ({ item, setIndex, itemKey }) => {
-    const { update, setUpdate } = useContext(UserContext)
+    const { update, setUpdate, token } = useContext(UserContext);
+    // console.log(token);
 
     const handleDelete = () => {
         const reply = confirm(`Are you sure to delete ${item.username}`);
         // console.log(reply);
+        const config = {
+            headers: {
+                token
+            }
+        }
         if (reply) {
-            axios.delete(backendUrl + 'users/' + item._id).then(res => {
+            axios.delete(backendUrl + 'users/' + item._id, config).then(res => {
                 if (res.data.deletedCount) {
                     setUpdate(!update)
                     toast.success("User Removed successfully")

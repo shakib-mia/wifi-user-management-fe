@@ -3,13 +3,15 @@ import InputField from '../InputField/InputField';
 import { useContext, useState } from 'react';
 import Button from '../Button/Button';
 import axios from 'axios';
-import { backendUrl, config } from '../../constants';
+import { backendUrl } from '../../constants';
 import { toast } from 'react-toastify';
 import { UserContext } from '../../context/UserContextProvider';
+// import { useNavigate } from 'react-router-dom';
 
 const AddUserModal = ({ showAddUserModal }) => {
     const [processing, setProcessing] = useState(false);
-    const { setUpdate } = useContext(UserContext)
+    // const navigate = useNavigate();
+    const { setUpdate, token } = useContext(UserContext)
     const handleSubmit = (e) => {
         e.preventDefault();
         const formData = {
@@ -20,16 +22,29 @@ const AddUserModal = ({ showAddUserModal }) => {
 
         setProcessing(true)
 
+        const config = {
+            headers: {
+                token,
+            },
+        }
+
 
 
         axios.post(backendUrl + 'users/', formData, config).then(res => {
-            if (res.data.insertedId.length) {
+            if (res.data.insertedId?.length) {
                 setUpdate(`${e.target.username.value} added successfully`);
                 showAddUserModal(false);
                 toast.success(`${e.target.username.value} added successfully`);
                 // console.log(document.getElementById('userslist').clientHeight);
                 document.getElementById("userslist").scrollTop = '100%'
             }
+        }).catch(err => {
+            console.log(err.response);
+            // if (err.response.status === 401) {
+            //     navigate("/login");
+            //     // toast.warn("Unauthorized access. Log in again with your credentials")
+            // }
+            // // localStorage.removeItem("token");
         })
 
     }
@@ -53,8 +68,8 @@ const AddUserModal = ({ showAddUserModal }) => {
     );
 };
 
-export default AddUserModal;
 
 AddUserModal.propTypes = {
     showAddUserModal: PropTypes.func.isRequired
 }
+export default AddUserModal;
