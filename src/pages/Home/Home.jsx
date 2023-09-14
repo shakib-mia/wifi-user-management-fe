@@ -6,7 +6,7 @@ import AddUserModal from "../../components/AddUserModal/AddUserModal";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-    const { users, setToken, loading, admin } = useContext(UserContext)
+    const { users, setToken, loading, admin, setUsers } = useContext(UserContext)
     const navigate = useNavigate()
     const [index, setIndex] = useState(-1);
     const [addUserModal, showAddUserModal] = useState(false)
@@ -14,7 +14,8 @@ const Home = () => {
     const handleLogout = () => {
         setToken("");
         localStorage.removeItem('token');
-        navigate("/login")
+        navigate("/login");
+        setUsers([])
     }
 
 
