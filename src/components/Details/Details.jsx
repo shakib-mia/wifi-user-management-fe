@@ -2,18 +2,25 @@ import { useContext, useState } from 'react';
 import PropTypes from 'prop-types'
 import InputField from '../InputField/InputField';
 import axios from 'axios';
-import { backendUrl, config } from '../../constants';
+import { backendUrl } from '../../constants';
 import { toast } from 'react-toastify';
 import { UserContext } from '../../context/UserContextProvider';
 
 const Details = ({ user, setIndex }) => {
-    const { setUpdate } = useContext(UserContext)
+    const { setUpdate, token } = useContext(UserContext)
     const [formData, setFormData] = useState({
         username: user.username,
         mac: user.mac,
         "last-paid": user['last-paid']
     })
 
+    const config = {
+        headers: {
+            token
+        }
+    }
+
+    // console.log(config);
     const handleSubmit = e => {
         e.preventDefault();
 
