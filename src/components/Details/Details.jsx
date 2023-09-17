@@ -7,7 +7,8 @@ import { toast } from 'react-toastify';
 import { UserContext } from '../../context/UserContextProvider';
 
 const Details = ({ user, setIndex }) => {
-    const { setUpdate, token } = useContext(UserContext)
+    const { setUpdate, update, token } = useContext(UserContext)
+    const [editing, setEditing] = useState(false)
     const [formData, setFormData] = useState({
         username: user.username,
         mac: user.mac,
@@ -23,14 +24,19 @@ const Details = ({ user, setIndex }) => {
     // console.log(config);
     const handleSubmit = e => {
         e.preventDefault();
+        setEditing(true)
 
         formData["last-paid"] = e.target['last-paid'].value.length > 0 ? e.target['last-paid'].value : "0-0-0000"
 
         axios.put(backendUrl + 'users/' + user._id, formData, config).then(({ data }) => {
             if (data.modifiedCount) {
+                setEditing(false)
                 setIndex(-1);
                 toast.success(`${user.username}'s data updated successfully`);
-                setUpdate(`${user.username}'s data updated successfully`);
+                setUpdate(!update);
+            } else {
+                toast.error("Nothing is modified");
+                setEditing(false)
             }
         }).catch(err => console.log(err))
     }
@@ -47,7 +53,7 @@ const Details = ({ user, setIndex }) => {
                     <InputField required={true} id='mac' label='Mac Address' placeholder='Mac Address' name='mac' type="text" value={formData.mac} onChange={e => setFormData({ ...formData, mac: e.target.value })} />
                     <InputField id='last-paid' label='Last Paid' placeholder='Last Paid' name='last-paid' type="date" value={formData['last-paid']} onChange={e => setFormData({ ...formData, "last-paid": e.target.value })} />
                     <div className="text-center mt-10">
-                        <input type="submit" value="Edit" className='px-10 py-2 bg-blue-800 text-white cursor-pointer hover:bg-blue-900 rounded' />
+                        <input type="submit" value={editing ? "Editing..." : "Edit"} className={`px-10 py-2 bg-blue-800 text-white cursor-pointer hover:bg-blue-900 rounded ${editing && 'opacity-60'}`} />
                     </div>
                 </div>
             </form>

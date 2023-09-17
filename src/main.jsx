@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import RequireAuth from './RequireAuth';
 import { UserContextProvider } from './context/UserContextProvider';
 import Register from './pages/Register/Register';
+import Verify from './components/Verify/Verify';
 
 
 
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
     path: "/signup",
     element: <Register />,
   },
+  {
+    path: "/verify/:email",
+    element: <Verify />
+  }
 ]);
 
 

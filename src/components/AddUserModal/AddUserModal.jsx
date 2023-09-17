@@ -11,7 +11,7 @@ import { UserContext } from '../../context/UserContextProvider';
 const AddUserModal = ({ showAddUserModal }) => {
     const [processing, setProcessing] = useState(false);
     // const navigate = useNavigate();
-    const { setUpdate, token } = useContext(UserContext)
+    const { setUpdate, update, token } = useContext(UserContext)
     const handleSubmit = (e) => {
         e.preventDefault();
         const formData = {
@@ -32,7 +32,7 @@ const AddUserModal = ({ showAddUserModal }) => {
 
         axios.post(backendUrl + 'users/', formData, config).then(res => {
             if (res.data.insertedId?.length) {
-                setUpdate(`${e.target.username.value} added successfully`);
+                setUpdate(!update);
                 showAddUserModal(false);
                 toast.success(`${e.target.username.value} added successfully`);
                 // console.log(document.getElementById('userslist').clientHeight);

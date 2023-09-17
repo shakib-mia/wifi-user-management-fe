@@ -6,10 +6,17 @@ import AddUserModal from "../../components/AddUserModal/AddUserModal";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-    const { users, setToken, loading, admin, setUsers } = useContext(UserContext)
+    const { users, setToken, loading, admin, setUsers, verified } = useContext(UserContext)
     const navigate = useNavigate()
     const [index, setIndex] = useState(-1);
     const [addUserModal, showAddUserModal] = useState(false)
+
+    // console.log(verified);
+    if (!verified) {
+        return <div className="flex items-center justify-center h-screen">
+            Check your Email For Verification mail
+        </div>
+    }
 
     const handleLogout = () => {
         setToken("");

@@ -3,31 +3,16 @@ import PropTypes from 'prop-types'
 import { backendUrl } from '../constants';
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
-// import { useNavigate } from 'react-router-dom';
 
 export const UserContext = createContext();
 
 export function UserContextProvider({ children }) {
-    const [update, setUpdate] = useState('')
+    const [update, setUpdate] = useState(false)
     const [users, setUsers] = useState([]);
     const [token, setToken] = useState(localStorage.getItem("token"));
     const [loading, setLoading] = useState(true);
     const [admin, setAdmin] = useState({});
-    // const [tokenDetails, setTokenDetails] = useState({});
-    // const [time, setTime] = useState(0)
-    // const navigate = useNavigate();
-
-
-
-    // useEffect
-    // console.log(tokenDetails);
-
-    // useEffect(() => {
-    //     const date = new Date();
-    //     if (tokenDetails?.exp > date.getTime()) {
-    //         localStorage.removeItem("token")
-    //     }
-    // }, [tokenDetails])
+    const [verified, setVerified] = useState(true)
 
     useEffect(() => {
         const config = {
@@ -38,11 +23,9 @@ export function UserContextProvider({ children }) {
 
         if (token) {
             axios.get(`${backendUrl}users`, config).then((res) => {
-                console.log(res.data.name);
                 if (res.data.name === 'TokenExpiredError') {
                     localStorage.removeItem("token");
                     setToken("");
-                    // navigate("/login")
                     return <Navigate to='/login' replace={true} />
                 }
                 setUsers(res.data);
@@ -60,6 +43,7 @@ export function UserContextProvider({ children }) {
 
         if (token) {
             axios.get(`${backendUrl}admin`, config).then(({ data }) => {
+                setVerified(data.isVerified)
                 setAdmin(data);
                 setLoading(false)
             })
@@ -69,11 +53,13 @@ export function UserContextProvider({ children }) {
     const contextValue = {
         users,
         setUsers,
+        update,
         setUpdate,
         setToken,
         token,
         loading,
-        admin
+        admin,
+        verified
     };
 
     return (

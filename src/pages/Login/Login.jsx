@@ -10,7 +10,7 @@ import { UserContext } from '../../context/UserContextProvider';
 const Login = () => {
     const [processing, setProcessing] = useState(false);
     // const [text, setText] = useState("Login")
-    const { setToken } = useContext(UserContext)
+    const { setToken, setLoading } = useContext(UserContext)
     const navigate = useNavigate()
 
     const handleSubmit = e => {
@@ -18,18 +18,21 @@ const Login = () => {
         setProcessing(true);
 
         axios.get(`${backendUrl}login/${e.target.email.value}/${e.target.password.value}`).then(res => {
-            setToken(res.data.token);
             // console.log(res);
             if (res.data.token) {
+                setToken(res.data.token);
                 setProcessing(false);
                 toast.success("Logged in successfully");
                 localStorage.setItem("token", res.data.token);
-                navigate("/")
+                navigate("/");
+                setLoading(true)
             }
 
             if (res.data.error) {
                 setProcessing(false)
-                toast.error(res.data.error)
+                toast.error(res.data.error, {
+                    position: "bottom-center"
+                })
                 console.log(res);
             }
         })

@@ -22,9 +22,11 @@ const Register = () => {
             }
 
             axios.post(`${backendUrl}signup`, formData).then(res => {
-                if (res.data.insertedCount) {
+                console.log(res.data);
+                if (res.data.acknowledged) {
                     setProcessing(false)
-                    navigate("/login")
+                    navigate(`/verify/${e.target.email.value}`);
+
                 }
             }).catch(err => {
                 setProcessing(false)
