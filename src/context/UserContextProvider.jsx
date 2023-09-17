@@ -56,6 +56,7 @@ export function UserContextProvider({ children }) {
         update,
         setUpdate,
         setToken,
+        setLoading,
         token,
         loading,
         admin,

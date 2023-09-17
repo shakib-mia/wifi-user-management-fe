@@ -11,7 +11,10 @@ import { UserContext } from '../../context/UserContextProvider';
 const AddUserModal = ({ showAddUserModal }) => {
     const [processing, setProcessing] = useState(false);
     // const navigate = useNavigate();
-    const { setUpdate, update, token } = useContext(UserContext)
+    const { setUpdate, update, token, admin } = useContext(UserContext);
+
+    // console.log(admin);
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const formData = {
@@ -30,22 +33,26 @@ const AddUserModal = ({ showAddUserModal }) => {
 
 
 
-        axios.post(backendUrl + 'users/', formData, config).then(res => {
-            if (res.data.insertedId?.length) {
-                setUpdate(!update);
-                showAddUserModal(false);
-                toast.success(`${e.target.username.value} added successfully`);
-                // console.log(document.getElementById('userslist').clientHeight);
-                document.getElementById("userslist").scrollTop = '100%'
-            }
-        }).catch(err => {
-            console.log(err.response);
-            // if (err.response.status === 401) {
-            //     navigate("/login");
-            //     // toast.warn("Unauthorized access. Log in again with your credentials")
-            // }
-            // // localStorage.removeItem("token");
-        })
+        if (admin.isVerified) {
+            axios.post(backendUrl + 'users/', formData, config).then(res => {
+                if (res.data.insertedId?.length) {
+                    setUpdate(!update);
+                    showAddUserModal(false);
+                    toast.success(`${e.target.username.value} added successfully`);
+                    // console.log(document.getElementById('userslist').clientHeight);
+                    document.getElementById("userslist").scrollTop = '100%'
+                }
+            }).catch(err => {
+                console.log(err.response);
+                // if (err.response.status === 401) {
+                //     navigate("/login");
+                //     // toast.warn("Unauthorized access. Log in again with your credentials")
+                // }
+                // // localStorage.removeItem("token");
+            })
+        } else {
+            toast.error("Email is not verified, check your email for verification")
+        }
 
     }
     return (

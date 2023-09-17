@@ -34,3 +34,13 @@ body {
   -webkit-background-clip: text;
   color: transparent; /* Hide the original text color */
 }
+
+@keyframes Rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotate {
+  animation: Rotate 5s infinite linear;
+}

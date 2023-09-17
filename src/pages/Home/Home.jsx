@@ -13,8 +13,8 @@ const Home = () => {
 
     // console.log(verified);
     if (!verified) {
-        return <div className="flex items-center justify-center h-screen">
-            Check your Email For Verification mail
+        return <div className="flex items-center justify-center h-screen w-1/3 mx-auto text-center">
+            To Be Benefited from this Website Check your <br /> Email For Verification mail and Get Verified
         </div>
     }
 

@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import InputField from '../../components/InputField/InputField';
 import Button from '../../components/Button/Button';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { backendUrl } from '../../constants';
 
 const Register = () => {
     const [processing, setProcessing] = useState(false);
-    const navigate = useNavigate()
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -23,9 +22,11 @@ const Register = () => {
 
             axios.post(`${backendUrl}signup`, formData).then(res => {
                 console.log(res.data);
-                if (res.data.acknowledged) {
-                    setProcessing(false)
-                    navigate(`/verify/${e.target.email.value}`);
+                if (res.data.insertedCount) {
+                    setProcessing(false);
+                    toast.success("Registration Successful. Check your mail to verify your account", {
+                        duration: 5000
+                    })
 
                 }
             }).catch(err => {
@@ -35,7 +36,8 @@ const Register = () => {
                 })
             })
         } else {
-            toast.warn("password didn't match")
+            toast.warn("password didn't match");
+            setProcessing(false)
         }
     }
 
