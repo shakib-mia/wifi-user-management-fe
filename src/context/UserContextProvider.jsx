@@ -46,7 +46,7 @@ export function UserContextProvider({ children }) {
                 setVerified(data.isVerified)
                 setAdmin(data);
                 setLoading(false)
-            })
+            }).catch(err => console.error(err))
         }
     }, [update, token]);
 

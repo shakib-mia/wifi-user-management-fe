@@ -11,7 +11,6 @@ const Home = () => {
     const [index, setIndex] = useState(-1);
     const [addUserModal, showAddUserModal] = useState(false)
 
-    // console.log(verified);
     if (!verified) {
         return <div className="flex items-center justify-center h-screen w-1/3 mx-auto text-center">
             To Be Benefited from this Website Check your <br /> Email For Verification mail and Get Verified

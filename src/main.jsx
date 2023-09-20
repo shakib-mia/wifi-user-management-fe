@@ -13,6 +13,9 @@ import RequireAuth from './RequireAuth';
 import { UserContextProvider } from './context/UserContextProvider';
 import Register from './pages/Register/Register';
 import Verify from './components/Verify/Verify';
+import ForgetPassword from './pages/ForgetPassword/ForgetPassword';
+import EnterOtp from './pages/EnterOtp/EnterOtp';
+import ResetPassword from './pages/ResetPassword/ResetPassword';
 
 
 
@@ -34,6 +37,18 @@ const router = createBrowserRouter([
   {
     path: "/verify/:email",
     element: <Verify />
+  },
+  {
+    path: '/forget-password',
+    element: <ForgetPassword />
+  },
+  {
+    path: "/enter-otp",
+    element: <EnterOtp />
+  },
+  {
+    path: "/reset-password",
+    element: <ResetPassword />
   }
 ]);
 
