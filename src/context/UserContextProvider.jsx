@@ -50,6 +50,11 @@ export function UserContextProvider({ children }) {
         }
     }, [update, token]);
 
+
+
+    const [editableData, setEditableData] = useState({})
+
+
     const contextValue = {
         users,
         setUsers,
@@ -60,7 +65,9 @@ export function UserContextProvider({ children }) {
         token,
         loading,
         admin,
-        verified
+        verified,
+        editableData,
+        setEditableData
     };
 
     return (

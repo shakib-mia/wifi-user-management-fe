@@ -34,7 +34,6 @@ const Login = () => {
                 toast.error(res.data.error, {
                     position: "bottom-center"
                 })
-                console.log(res);
             }
         })
     }

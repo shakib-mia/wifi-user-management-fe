@@ -3,7 +3,7 @@ import { UserContext } from "../../context/UserContextProvider";
 import Details from "../../components/Details/Details";
 import ListItem from "../../components/ListItem/ListItem";
 import AddUserModal from "../../components/AddUserModal/AddUserModal";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Home = () => {
     const { users, setToken, loading, admin, setUsers, verified } = useContext(UserContext)
@@ -28,7 +28,7 @@ const Home = () => {
     return <div className="xl:h-screen xl:w-screen xl:flex xl:flex-col xl:items-center xl:justify-center">
         <div className="xl:w-1/2 xl:h-1/2 shadow-[0_0_20px_#1c1c1c] rounded-md p-4 overflow-auto relative">
             <div className="w-[600px] xl:w-full relative">
-                <p className="text-right fixed right-3 top-4">{admin?.name?.length ? admin.name : admin?.email?.split("@")[0]} <button className="text-white bg-red-700 px-4 py-2 rounded ml-4" onClick={handleLogout}>Log out</button></p>
+                <p className="text-right fixed right-3 top-4"><Link to='/profile'>{admin?.name?.length ? admin.name : admin?.email?.split("@")[0]}</Link> <button className="text-white bg-red-700 px-4 py-2 rounded ml-4" onClick={handleLogout}>Log out</button></p>
                 <h1 className="text-center text-5xl gradient-text font-semibold">All Users</h1>
                 <h6 className="text-center text-lg text-slate-400 mb-4 font-medium">Total Users: {users.length}</h6>
                 {users.length > 0 && <div className="flex gap-5 p-3 shadow-md my-3 text-center capitalize items-center text-xl font-light" id="userslist">

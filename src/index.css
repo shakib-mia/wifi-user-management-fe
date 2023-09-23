@@ -53,3 +53,8 @@ body {
 .remove-arrow {
   -moz-appearance: textfield;
 }
+
+.card {
+  box-shadow: 0 0 10px #111;
+  @apply p-5 rounded;
+}
