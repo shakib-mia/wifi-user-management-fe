@@ -1,17 +1,28 @@
 import PropTypes from 'prop-types'
 import InputField from '../InputField/InputField';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import Button from '../Button/Button';
 import axios from 'axios';
 import { backendUrl } from '../../constants';
 import { toast } from 'react-toastify';
 import { UserContext } from '../../context/UserContextProvider';
+import { gsap } from 'gsap';
 // import { useNavigate } from 'react-router-dom';
 
 const AddUserModal = ({ showAddUserModal }) => {
     const [processing, setProcessing] = useState(false);
     // const navigate = useNavigate();
     const { setUpdate, update, token, admin } = useContext(UserContext);
+
+
+    const containerRef = useRef(null);
+    const formRef = useRef(null);
+
+
+    useEffect(() => {
+        gsap.fromTo(containerRef.current, { opacity: 0 }, { opacity: 1, duration: 0.4 });
+        gsap.to(formRef.current, { top: 0, opacity: 1 })
+    }, [])
 
     // console.log(admin);
 
@@ -53,12 +64,20 @@ const AddUserModal = ({ showAddUserModal }) => {
         } else {
             toast.error("Email is not verified, check your email for verification")
         }
-
     }
+
+
+    const handleCloseModal = () => {
+        setTimeout(() => showAddUserModal(false), 400)
+
+        gsap.fromTo(containerRef.current, { opacity: 1 }, { opacity: 0, duration: 0.4 })
+    }
+
+
     return (
-        <div className='fixed top-0 left-0 w-screen h-screen backdrop-blur flex items-center justify-center'>
-            <form className="relative xl:w-1/2 bg-[#333333] p-10 rounded-2xl" onSubmit={handleSubmit}>
-                <button type='button' className='absolute -right-10 -top-10 text-4xl' onClick={() => showAddUserModal(false)}>&times;</button>
+        <div className='fixed top-0 left-0 w-screen h-screen backdrop-blur flex items-center justify-center opacity-0' ref={containerRef}>
+            <form className="relative xl:w-1/2 bg-[#333333] p-10 rounded-2xl -top-24 opacity-0" ref={formRef} onSubmit={handleSubmit}>
+                <button type='button' className='absolute -right-10 -top-10 text-4xl' onClick={handleCloseModal}>&times;</button>
                 <div className='text-5xl text-center gradient-text block font-bold'>Add User</div>
 
                 <InputField type='text' required={true} label='User Name' id='username' name='username' placeholder='Enter Your User Name' />

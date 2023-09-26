@@ -58,3 +58,7 @@ body {
   box-shadow: 0 0 10px #111;
   @apply p-5 rounded;
 }
+
+a.active {
+  @apply bg-slate-200;
+}

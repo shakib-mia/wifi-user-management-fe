@@ -5,7 +5,7 @@ import { UserContext } from '../../context/UserContextProvider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faPen } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
-import { backendUrl, config } from '../../constants';
+import { backendUrl } from '../../constants';
 
 const EditableItem = ({ value, item, name }) => {
     const [editable, setEditable] = useState(false);

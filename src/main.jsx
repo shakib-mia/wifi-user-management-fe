@@ -17,13 +17,14 @@ import ForgetPassword from './pages/ForgetPassword/ForgetPassword';
 import EnterOtp from './pages/EnterOtp/EnterOtp';
 import ResetPassword from './pages/ResetPassword/ResetPassword';
 import Profile from './pages/Profile/Profile';
-
+import Navbar from './components/Navbar/Navbar';
 
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RequireAuth>
+      <Navbar />
       <Home />
     </RequireAuth>,
   },
@@ -54,6 +55,7 @@ const router = createBrowserRouter([
   {
     path: "/profile",
     element: <RequireAuth>
+      <Navbar />
       <Profile />
     </RequireAuth>
   },
@@ -65,7 +67,12 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <UserContextProvider>
+      {/* <Navbar /> */}
       <RouterProvider router={router} />
+      {/* <Router>
+        <Navbar />
+        {router.map(({ path, element }, key) => <Route path={path} element={element} key={key} />)}
+      </Router> */}
 
       <ToastContainer className="capitalize" />
     </UserContextProvider>
