@@ -3,11 +3,11 @@ import { UserContext } from "../../context/UserContextProvider";
 import Details from "../../components/Details/Details";
 import ListItem from "../../components/ListItem/ListItem";
 import AddUserModal from "../../components/AddUserModal/AddUserModal";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-    const { users, setToken, loading, setUsers, verified } = useContext(UserContext)
-    const navigate = useNavigate()
+    const { users, loading, verified } = useContext(UserContext)
+    // const navigate = useNavigate()
     const [index, setIndex] = useState(-1);
     const [addUserModal, showAddUserModal] = useState(false);
 
