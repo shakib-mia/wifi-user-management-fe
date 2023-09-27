@@ -13,13 +13,13 @@ export function UserContextProvider({ children }) {
     const [loading, setLoading] = useState(true);
     const [admin, setAdmin] = useState({});
     const [verified, setVerified] = useState(true)
+    const config = {
+        headers: {
+            token,
+        },
+    };
 
     useEffect(() => {
-        const config = {
-            headers: {
-                token,
-            },
-        };
 
         if (token) {
             axios.get(`${backendUrl}users`, config).then((res) => {
@@ -63,6 +63,7 @@ export function UserContextProvider({ children }) {
         setToken,
         setLoading,
         token,
+        config,
         loading,
         admin,
         verified,

@@ -1,13 +1,20 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContextProvider";
 import Details from "../../components/Details/Details";
 import ListItem from "../../components/ListItem/ListItem";
 import AddUserModal from "../../components/AddUserModal/AddUserModal";
+import InputField from "../../components/InputField/InputField";
 // import { useNavigate } from "react-router-dom";
 
 const Home = () => {
     const { users, loading, verified } = useContext(UserContext)
-    // const navigate = useNavigate()
+    const [wifiUsers, setWifiUsers] = useState([]);
+
+    useEffect(() => {
+        setWifiUsers(users)
+    }, [users])
+
+    // console.log(wifiUsers);
     const [index, setIndex] = useState(-1);
     const [addUserModal, showAddUserModal] = useState(false);
 
@@ -18,6 +25,12 @@ const Home = () => {
     }
 
 
+    const handleSearch = e => {
+        const foundUsers = users.filter(user => user.username.toLowerCase().includes(e.target.value.toLowerCase()) || user.mac.toLowerCase().includes(e.target.value.toLowerCase()))
+        setWifiUsers(foundUsers);
+    }
+
+
 
     return <div className="xl:h-screen xl:w-screen xl:flex xl:flex-col xl:items-center xl:justify-center">
         <div className="xl:w-1/2 xl:h-1/2 shadow-[0_0_20px_#1c1c1c] rounded-md p-4 overflow-auto relative">
@@ -25,6 +38,7 @@ const Home = () => {
 
                 <h1 className="text-center text-5xl gradient-text font-semibold">All Users</h1>
                 <h6 className="text-center text-lg text-slate-400 mb-4 font-medium">Total Users: {users.length}</h6>
+                <InputField placeholder="Search by user's name" type="text" onChange={handleSearch} id="Search" />
                 {users.length > 0 && <div className="flex gap-5 p-3 shadow-md my-3 text-center capitalize items-center text-xl font-light" id="userslist">
                     <div className="w-3/12">username</div>
                     <div className="w-4/12">MAC Address</div>
@@ -35,8 +49,8 @@ const Home = () => {
             </div>
             {!loading ?
                 users.length > 0 ?
-                    users.map((item, key) => <ListItem item={item} setIndex={setIndex} itemKey={key} key={key} />)
-                    : <div className="text-center h-full w-full flex items-center justify-center absolute top-0 left-0">No users found &#128528;</div>
+                    wifiUsers.map((item, key) => <ListItem item={item} setIndex={setIndex} itemKey={key} key={key} />)
+                    : <div className="text-center h-full w-full flex items-center justify-center absolute top-0 left-0 bg-[#333]">No users found &#128528;</div>
                 : <div className="text-center">Loading...</div>}
 
         </div>

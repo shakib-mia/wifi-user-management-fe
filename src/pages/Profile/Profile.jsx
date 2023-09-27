@@ -8,14 +8,15 @@ import axios from 'axios';
 import { backendUrl } from '../../constants';
 import Modal from '../../components/Modal/Modal';
 import Button from '../../components/Button/Button';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
-    const { admin, token, update, setUpdate } = useContext(UserContext);
-    const [image, setImage] = useState({})
+    const { admin, token, update, setUpdate, setToken, config } = useContext(UserContext);
+    const [image, setImage] = useState({});
+    const [deleteUser, setDeleteUser] = useState(false)
 
     const handleChange = e => {
         e.preventDefault()
-        console.log(admin._id);
         // console.log(e.target.files[0]);
         const formData = new FormData();
         formData.append("image", image);
@@ -24,7 +25,6 @@ const Profile = () => {
 
         axios.post(url, formData).then(res => {
             if (res.data.data?.display_url) {
-                // delete admin._id
                 const newAdminData = { ...admin, profilePic: res.data.data?.display_url };
                 delete newAdminData._id
                 axios.put(`${backendUrl}admin/${admin._id}`, newAdminData, {
@@ -38,6 +38,19 @@ const Profile = () => {
                     }
                 })
             }
+        })
+    }
+
+    const navigate = useNavigate()
+
+    const handleDeleteAccount = () => {
+        console.log(admin._id);
+
+        axios.delete(backendUrl + 'admin/' + admin._id, config).then(res => {
+            console.log(res);
+            navigate('/login');
+            setToken("");
+            localStorage.removeItem("token")
         })
     }
 
@@ -61,6 +74,8 @@ const Profile = () => {
                         <EditableItem value={admin.email ? admin.email : ""} item={admin} name="email" />
 
                         {/* {name ? <h2 className='text-base text-center'>{email}</h2> : <PulseLoading />} */}
+
+                        <Button className='inline-block w-full py-2 border border-[#FF6347] rounded-md text-[#FF6347] mt-3 hover:bg-[#FF6347] hover:text-white transition-all' onClick={() => setDeleteUser(true)}>Delete</Button>
                     </div>
                 </div>
             </div>
@@ -74,6 +89,17 @@ const Profile = () => {
                         <Button type='submit'>Submit</Button>
                     </div>
                 </form>
+            </Modal>}
+
+
+            {deleteUser && <Modal>
+                <div className='bg-[#333] p-10 text-center relative'>
+                    <button type='button' className='absolute -right-10 -top-10 text-4xl' onClick={() => setDeleteUser(false)}>&times;</button>
+                    Are You Sure You want to delete your Account? <br />
+                    All of your data will be lost.
+
+                    <Button className='inline-block w-full py-2 border border-[#FF6347] rounded-md text-[#FF6347] mt-3 hover:bg-[#FF6347] hover:text-white transition-all' onClick={handleDeleteAccount}>Delete</Button>
+                </div>
             </Modal>}
         </div>
     );

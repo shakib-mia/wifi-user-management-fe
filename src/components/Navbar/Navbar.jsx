@@ -12,8 +12,9 @@ const Navbar = () => {
 
     document.addEventListener('click', function (event) {
         const targetElement = document.getElementById('icon');
-        if (targetElement) {
-            const isClickInsideElement = targetElement?.contains(event.target);
+        const targetElement2 = document.getElementById('action');
+        if (targetElement && targetElement2) {
+            const isClickInsideElement = targetElement?.contains(event.target) || targetElement2?.contains(event.target);
             if (!isClickInsideElement) {
                 setShowAction(false);
             }

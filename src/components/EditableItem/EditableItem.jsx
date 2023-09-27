@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faPen } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { backendUrl } from '../../constants';
+import { toast } from 'react-toastify';
 
 const EditableItem = ({ value, item, name }) => {
     const [editable, setEditable] = useState(false);
@@ -26,16 +27,39 @@ const EditableItem = ({ value, item, name }) => {
         e.preventDefault();
 
         delete formData._id
-        axios.put(backendUrl + 'admin/' + item._id, formData, {
-            headers: {
-                token
-            }
-        }).then(res => {
-            if (res.data.modifiedCount) {
-                setUpdate(!update)
-                setEditable(false);
-            }
-        })
+        if (name !== 'email') {
+            axios.put(backendUrl + 'admin/' + item._id, formData, {
+                headers: {
+                    token
+                }
+            }).then(res => {
+                if (res.data.modifiedCount) {
+                    setUpdate(!update)
+                    setEditable(false);
+                }
+            })
+        }
+
+        else {
+            axios.put(backendUrl + 'admin/' + item._id, formData, {
+                headers: {
+                    token
+                }
+            }).then(res => {
+                console.log(res);
+                if (res.status === 200) {
+                    setUpdate(!update)
+                    setEditable(false);
+
+
+                    toast.success(res.data)
+                }
+            }).catch(({ response }) => {
+                if (response.status) {
+                    toast.error("Email Already in Use")
+                }
+            })
+        }
     }
 
 
