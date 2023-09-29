@@ -37,15 +37,15 @@ const UserAction = ({ shownAction }) => {
                 </p>
 
                 <ul className='flex flex-col gap-2'>
-                    <NavLink className='inline-block w-full h-full rounded hover:bg-slate-100' to="/profile">
-                        <li className='p-3'>
-                            Profile
-                        </li>
-                    </NavLink>
-
                     <NavLink className='inline-block w-full h-full rounded hover:bg-slate-100' to="/">
                         <li className='p-3'>
                             Dashboard
+                        </li>
+                    </NavLink>
+
+                    <NavLink className='inline-block w-full h-full rounded hover:bg-slate-100' to="/profile">
+                        <li className='p-3'>
+                            Profile
                         </li>
                     </NavLink>
 
