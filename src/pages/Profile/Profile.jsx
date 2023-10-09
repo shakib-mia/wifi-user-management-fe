@@ -9,36 +9,49 @@ import { backendUrl } from '../../constants';
 import Modal from '../../components/Modal/Modal';
 import Button from '../../components/Button/Button';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Profile = () => {
-    const { admin, token, update, setUpdate, setToken, config } = useContext(UserContext);
+    const { admin, update, setUpdate, setToken, config } = useContext(UserContext);
     const [image, setImage] = useState({});
-    const [deleteUser, setDeleteUser] = useState(false)
+    const [deleteUser, setDeleteUser] = useState(false);
+
+    // console.log(import.meta.env.VITE_TINYPNG_API_KEY);
 
     const handleChange = e => {
         e.preventDefault()
-        // console.log(e.target.files[0]);
-        const formData = new FormData();
-        formData.append("image", image);
+        var reader = new FileReader();
+        reader.onloadend = function () {
+            // Convert the Data URL to a Blob
+            const dataURL = reader.result;
+            const byteString = atob(dataURL.split(',')[1]);
+            const mimeType = dataURL.split(',')[0].split(':')[1].split(';')[0];
+            const blob = new Blob([new Uint8Array(byteString.length)], { type: mimeType });
 
-        const url = 'https://api.imgbb.com/1/upload?key=42afc79fccd60ad9768d1aa145ddfaff'
+            // Get the file size from the Blob
+            const fileSize = blob.size;
 
-        axios.post(url, formData).then(res => {
-            if (res.data.data?.display_url) {
-                const newAdminData = { ...admin, profilePic: res.data.data?.display_url };
+            console.log(fileSize / 1024.9);
+
+
+
+            if (fileSize / 1024.9 < 150) {
+                const newAdminData = { ...admin, profilePic: reader.result }
+
                 delete newAdminData._id
-                axios.put(`${backendUrl}admin/${admin._id}`, newAdminData, {
-                    headers: {
-                        token
-                    }
-                }).then(res => {
+
+                axios.put(`${backendUrl}admin/${admin._id}`, newAdminData, config).then(res => {
                     if (res.data.modifiedCount) {
                         setImage({});
                         setUpdate(!update)
                     }
                 })
+            } else {
+                toast.error("File Must be Less than 100kB")
             }
-        })
+        }
+        reader.readAsDataURL(image);
+
     }
 
     const navigate = useNavigate()
@@ -66,7 +79,7 @@ const Profile = () => {
                                 <FontAwesomeIcon icon={faPen} className='text-[8px]' />
                             </label>
 
-                            <input onChange={e => setImage(e.target.files[0])} type="file" id="file" name='profilePicture' className='hidden' />
+                            <input onChange={e => setImage(e.target.files[0])} type="file" accept='image/*' id="file" name='profilePicture' className='hidden' />
                         </div>
                     </div>
                     <div className='mt-8 w-full'>
@@ -75,13 +88,14 @@ const Profile = () => {
 
                         {/* {name ? <h2 className='text-base text-center'>{email}</h2> : <PulseLoading />} */}
 
-                        <Button className='inline-block w-full py-2 border border-[#FF6347] rounded-md text-[#FF6347] mt-3 hover:bg-[#FF6347] hover:text-white transition-all' onClick={() => setDeleteUser(true)}>Delete</Button>
+                        <Button type='button' className='inline-block w-full py-2 border border-[#FF6347] rounded-md text-[#FF6347] mt-3 hover:bg-[#FF6347] hover:text-white transition-all' onClick={() => setDeleteUser(true)}>Delete</Button>
                     </div>
                 </div>
             </div>
 
-            {image.name && <Modal>
+            {image?.name && <Modal>
 
+                {/* {} */}
                 <form className='relative h-1/2' onSubmit={handleChange}>
                     <button className="absolute text-2xl -top-10 -right-10" onClick={() => setImage({})}>&times;</button>
                     <img src={URL.createObjectURL(image)} className='h-full' alt="profile" />

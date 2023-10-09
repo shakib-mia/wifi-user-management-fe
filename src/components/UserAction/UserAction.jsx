@@ -30,7 +30,7 @@ const UserAction = ({ shownAction }) => {
     return (
         <div className="absolute top-16 right-0 opacity-0" id='action' ref={containerRef}>
             <div className='bg-white relative w-48 text-slate-800 p-3'>
-                <div className='bg-white w-4 h-4 absolute rotate-45 right-5 -top-[2px]'></div>
+                <div className='bg-white w-4 h-4 absolute rotate-45 right-5 -top-[2px] z-[-1]'></div>
 
                 <p className="text-center">
                     {admin.name}
