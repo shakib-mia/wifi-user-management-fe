@@ -30,7 +30,7 @@ const InputField = ({ id, label, placeholder, type, name, required, value, onCha
                         <input required={required} maxLength={maxLength} className={`${type === 'number' ? 'remove-arrow' : ""} ${className ? className : ""} bg-transparent w-full p-2 focus:outline-none rounded placeholder:text-base shadow-[inset_0_0_10px_#222] text-white`} id={id} placeholder={placeholder} type={type} name={name} value={value} onChange={onChange} />
                         :
                         <input required={required} className={`${type === 'number' ? 'remove-arrow' : ""} ${className ? className : ""} bg-transparent w-full p-2 focus:outline-none rounded placeholder:text-base shadow-[inset_0_0_10px_#222] text-white`} id={id} placeholder={placeholder} type={show ? "text" : "password"} name={name} value={value} onChange={onChange} />}
-                    {type === 'password' && icon && <div className='absolute right-2 top-2'>
+                    {type === 'password' && <div className='absolute right-2 top-2'>
                         <label htmlFor={`pass${id}`}>
                             <FontAwesomeIcon className='cursor-pointer' icon={show ? faEye : faEyeSlash} />
                         </label>
@@ -43,7 +43,7 @@ const InputField = ({ id, label, placeholder, type, name, required, value, onCha
 };
 
 InputField.propTypes = {
-    id: PropTypes.string.isRequired,
+    id: PropTypes.string,
     label: PropTypes.string,
     placeholder: PropTypes.string,
     type: PropTypes.string.isRequired,
