@@ -42,7 +42,7 @@ const Home = () => {
     return <div className="w-11/12 md:w-9/12 lg:w-5/6 xl:w-10/12 2xl:w-1/2 mx-auto">
         <InputField placeholder="Enter your Name or MAC Here" className="mt-20" onChange={handleSearch} type="text" />
         <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 mt-20 items-center">
-            {users.length > 0 ? wifiUsers.map((item, key) => <ListItem key={key} item={item} itemKey={key} setIndex={setIndex} />)
+            {users.length > 0 ? wifiUsers.map((item, key) => item.username?.length > 0 && <ListItem key={key} item={item} itemKey={key} setIndex={setIndex} />)
                 :
                 <>Loading...</>}
         </div>
