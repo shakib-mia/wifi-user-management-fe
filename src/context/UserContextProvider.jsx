@@ -18,21 +18,30 @@ export function UserContextProvider({ children }) {
             token,
         },
     };
+    // const navigate = useNavigate()
 
     useEffect(() => {
 
         if (token) {
             axios.get(`${backendUrl}users`, config).then((res) => {
-                if (res.data.name === 'TokenExpiredError') {
+                // console.log(res.data);
+                // if (res.data.name === 'TokenExpiredError') {
+                // localStorage.removeItem("token");
+                // setToken("");
+                // return <Navigate to='/login' replace={true} />
+                // }
+                setUsers(res.data);
+                setLoading(false)
+            }).catch(err => {
+                console.log(err.response.status === 401);
+                if (err.response.status === 401) {
                     localStorage.removeItem("token");
                     setToken("");
                     return <Navigate to='/login' replace={true} />
                 }
-                setUsers(res.data);
-                setLoading(false)
-            }).catch(err => console.log(err))
+            })
         }
-    }, [update, token]);
+    }, [update, token, config]);
 
     useEffect(() => {
         const config = {

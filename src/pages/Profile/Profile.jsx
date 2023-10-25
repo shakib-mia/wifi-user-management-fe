@@ -27,13 +27,9 @@ const Profile = () => {
             const byteString = atob(dataURL.split(',')[1]);
             const mimeType = dataURL.split(',')[0].split(':')[1].split(';')[0];
             const blob = new Blob([new Uint8Array(byteString.length)], { type: mimeType });
-
+            // console.log(dataURL);
             // Get the file size from the Blob
             const fileSize = blob.size;
-
-            console.log(fileSize / 1024.9);
-
-
 
             if (fileSize / 1024.9 < 150) {
                 const newAdminData = { ...admin, profilePic: reader.result }
@@ -47,7 +43,9 @@ const Profile = () => {
                     }
                 })
             } else {
-                toast.error("File Must be Less than 100kB")
+                // toast.error("File Must be Less than 100kB")
+                console.log(dataURL);
+                axios.post(backendUrl + "compress", { dataURL }, config).then(({ data }) => console.log(data))
             }
         }
         reader.readAsDataURL(image);

@@ -71,9 +71,9 @@ const Details = ({ user, setIndex }) => {
                 {/* <input type="text" value={user.username} onChange={e => setFormData({ ...formData, username: e.target.value })} /> */}
                 <div className='w-full h-full rounded-md p-4 flex flex-col gap-5 overflow-auto bg-[#333]'>
                     <h1 className='text-center text-5xl gradient-text font-semibold'>Edit User</h1>
-                    <InputField required={true} id='username' label='User Name' placeholder='User Name' name='username' type="text" value={formData.username} onChange={e => setFormData({ ...formData, username: e.target.value })} />
-                    <InputField required={true} id='mac' label='Mac Address' placeholder='Mac Address' name='mac' type="text" value={formData.mac} onChange={e => setFormData({ ...formData, mac: e.target.value })} />
-                    <InputField id='last-paid' label='Last Paid' placeholder='Last Paid' name='last-paid' type="date" value={formData['last-paid']} onChange={e => setFormData({ ...formData, "last-paid": e.target.value })} />
+                    <InputField containerClassName='mt-0' required={true} id='username' label='User Name' placeholder='User Name' name='username' type="text" value={formData.username} onChange={e => setFormData({ ...formData, username: e.target.value })} />
+                    <InputField containerClassName='mt-0' required={true} id='mac' label='MAC Address' placeholder='Mac Address' name='mac' type="text" value={formData.mac} onChange={e => setFormData({ ...formData, mac: e.target.value })} />
+                    <InputField containerClassName='mt-0' id='last-paid' label='Last Paid' placeholder='Last Paid' name='last-paid' type="date" value={formData['last-paid']} onChange={e => setFormData({ ...formData, "last-paid": e.target.value })} />
                     <div className="text-center mt-0">
                         <input type="submit" value={editing ? "Editing..." : "Edit"} className={`px-10 py-2 bg-blue-800 text-white cursor-pointer hover:bg-blue-900 rounded ${editing && 'opacity-60'}`} />
                         <Button type='button' className='bg-red-600 text-white py-2 rounded hover:bg-red-700 px-10 ml-4' onClick={handleDelete}>Delete</Button>

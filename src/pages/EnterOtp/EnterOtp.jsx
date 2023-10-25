@@ -43,6 +43,7 @@ const EnterOtp = () => {
 
         axios.post(backendUrl + 'verify-otp', { value: parseInt(otp) }, config)
             .then(res => {
+                console.log(res);
                 if (res.status === 200) {
                     console.log(res.data);
 
@@ -52,7 +53,7 @@ const EnterOtp = () => {
                     }
                 }
             })
-            .catch(err => toast.error(err.response.data, { position: "bottom-center" }))
+            .catch(err => console.log(err))
     }
 
 

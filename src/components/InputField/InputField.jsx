@@ -8,7 +8,7 @@ const InputField = ({ id, label, placeholder, type, name, required, value, onCha
     return (
         <>
             {containerClassName ? <div className={containerClassName}>
-                {label && <label className='ml-2 capitalize' htmlFor={id}>{label}</label>}
+                {label && <label className='ml-2 capitalize mb-1' htmlFor={id}>{label}</label>}
                 <div className='relative'>
                     {type !== 'password'
                         ?
@@ -23,7 +23,7 @@ const InputField = ({ id, label, placeholder, type, name, required, value, onCha
                     </div>}
                 </div>
             </div> : <>
-                {label && <label className='ml-2 capitalize' htmlFor={id}>{label}</label>}
+                {label && <label className='ml-2 capitalize mb-1' htmlFor={id}>{label}</label>}
                 <div className='relative'>
                     {type !== 'password'
                         ?

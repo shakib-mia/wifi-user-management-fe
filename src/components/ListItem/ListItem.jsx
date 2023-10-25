@@ -1,15 +1,10 @@
 // import React from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types'
-import { backendUrl } from '../../constants';
-import { useContext } from 'react';
-import { UserContext } from '../../context/UserContextProvider';
-import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMobile } from '@fortawesome/free-solid-svg-icons';
 
 const ListItem = ({ item, setIndex, itemKey }) => {
-    const { update, setUpdate, token } = useContext(UserContext);
+    // const { update, setUpdate, token } = useContext(UserContext);
     // console.log(token);
     // console.log(item['last-paid'] !== '0-0-000');
 
@@ -30,7 +25,7 @@ const ListItem = ({ item, setIndex, itemKey }) => {
         //         <button className='text-base text-[#ff1a1a] font-medium' onClick={handleDelete}>Delete</button>
         //     </div>
         // </div>
-        <div className="text-center shadow-xl p-3 cursor-pointer" onClick={() => setIndex(itemKey)}>
+        <div className="text-center shadow-xl hover:scale-110 transition p-3 cursor-pointer" onClick={() => setIndex(itemKey)}>
             <FontAwesomeIcon className="text-white text-5xl" icon={faMobile} />
             <p>{item?.username}</p>
             <p className='text-xs'>Last Paid: {month === 'Invalid Date' ? <span className='text-red-500'>never yet</span> : <span className='text-green-500'>{month}</span>}</p>
