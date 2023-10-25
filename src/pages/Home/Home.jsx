@@ -9,18 +9,16 @@ import Button from "../../components/Button/Button";
 
 const Home = () => {
     const { users, verified } = useContext(UserContext)
-    const [wifiUsers, setWifiUsers] = useState([...users]);
-
+    const [wifiUsers, setWifiUsers] = useState(users);
 
     useEffect(() => {
         setWifiUsers(users)
-    }, [users])
+    }, [users.length])
 
     useEffect(() => {
         users.push({})
     }, [])
 
-    // console.log(wifiUsers);
     const [index, setIndex] = useState(-1);
     const [addUserModal, showAddUserModal] = useState(false);
 
@@ -31,23 +29,14 @@ const Home = () => {
     }
 
 
-    const handleSearch = e => {
-        // const foundUsers = users.filter(user => user.username.toLowerCase().includes(e.target.value.toLowerCase()) || user.mac.toLowerCase().includes(e.target.value.toLowerCase()))
-        // setWifiUsers(foundUsers);
+    const handleSearch = (e) => {
+        const searchValue = e.target.value.toLowerCase();
+        const foundUsers = users.filter((user) =>
+            user.username.toLowerCase().includes(searchValue) || user.mac.toLowerCase().includes(searchValue)
+        );
 
-        const foundUser = wifiUsers.filter(user => {
-            user.found = user.username?.toLowerCase().includes(e.target.value.toLocaleLowerCase()) ? true : false;
-            return user.username?.toLowerCase().includes(e.target.value.toLocaleLowerCase())
-        })
-
-        // console.log(foundUser);
-        foundUser.map(item => {
-            // item._id
-            console.log(wifiUsers);
-        })
-
-        // setWifiUsers([...wifiUsers, ...foundUser])
-    }
+        setWifiUsers(foundUsers);
+    };
 
 
     return <div className="w-11/12 md:w-9/12 lg:w-5/6 xl:w-10/12 2xl:w-1/2 mx-auto">

@@ -3,7 +3,6 @@ import InputField from '../../components/InputField/InputField';
 import Button from '../../components/Button/Button';
 import axios from 'axios';
 import { backendUrl } from '../../constants';
-import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { UserContext } from '../../context/UserContextProvider';
